@@ -11,7 +11,14 @@ import {
   SEO,
 } from '../components';
 
+import { useAuth } from '@faustwp/core';
+
+export function AuthenticatedView() {
+  return <>My authenticated content</>;
+}
+
 export default function Component() {
+  const { isAuthenticated, isReady, loginUrl } = useAuth();
   const { data } = useQuery(Component.query, {
     variables: Component.variables(),
   });
@@ -32,6 +39,7 @@ export default function Component() {
       <Main>
         <Container>
           <Hero title={'Front Page'} />
+          {isAuthenticated === true ? <AuthenticatedView />: null}
           <div className="text-center">
             <p>This page is utilizing the "front-page" WordPress template.</p>
             <code>wp-templates/front-page.js</code>
